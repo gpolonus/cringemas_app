@@ -20,9 +20,9 @@ export const getLinesFromFile = (csvLinesPath) => {
     // TODO: Convert the column names here
     const { character, direction, line } = data;
     lines.push({
-      character: character,
-      direction: direction,
-      line: line
+      character: character.trim(),
+      direction: direction.trim(),
+      line: line.trim()
     })
   }).then(() => lines)
 }
