@@ -19,10 +19,37 @@
 
 
 # TODOs
+- [] color picker
+- [] close dialogs on admin action completion
+- [] pop error modals on endpoint/sse errors
+- [o] pm2 running BE
+- [] pm2 releasing the ports on BE close
 
-- [o] multiple roles for one client
-- [o] What happens on finish?
+## Tests to Perform
+- [x] multiple characters for one client
+- [x] What happens on finish?
+- [x] Error Modal
+  - dialog element for this
+- admin actions
+  - [x] reseting all
+  - [x] resetting the line
+- [x] rejoining in place after leaving
+  - [x] bob leaves and rejoins when it's his line
+  - [x] bob leaves and rejoins when it's not his line
+  - [x] bob leaves and rejoins when his line is next
+    - can I just resend the line data on rejoin?
+  - client with bob and alice leaves
+    - [x] when it's alice's line
+    - [x] when it's bob's line
+- [] stress testing number of connections on server
+
+
+## Future todos
 - [] color coding of stage direction vs line
 - [] prompt user when the next line is there's
 - [] list word count for each character in the signup screen
+- [] don't continue the play if not all characters are present
+  - disable the button if not all characters are there
+  - have existing players pick up other characters if someone leaves permanently
+    - for now this can be fixed via resetting the line number
 

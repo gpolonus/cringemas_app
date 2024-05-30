@@ -1,7 +1,9 @@
 
 let clientId;
-// TODO: don't use this bullshit anymore
-const url = 'http://localhost:3000'
+
+export const url = process.env.NODE_ENV === 'development'
+  ? 'http://localhost:3000'
+  : '';
 
 export const fetchCharacters = () => {
   return fetch(`${url}/characters`).then(res => res.json())
@@ -39,10 +41,15 @@ export const connect = (handleMessage) => {
     // TODO: test this out
     // setTimeout(() => connect(handleMessage))
   });
+
+  window.onbeforeunload = () => {
+    console.log('closing bc of unload')
+    source.close()
+  }
 }
 
 export const selectCharacter = (char) => {
-  return fetch(`${url}/selectCharacter?id=${clientId}&character=${char}`)
+  return fetch(`${url}/selectCharacter?id=${clientId}&character=${char.join(',')}`)
 }
 
 export const finishLine = () => {

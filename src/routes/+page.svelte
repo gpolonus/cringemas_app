@@ -9,68 +9,94 @@
     GAME_STATUSES,
     finishLine,
     selectCharacter,
-    fetchCharacters,
     lineComingUpStore
   } from '$lib'
+  import ItemSelect from '../lib/item-select.svelte';
 
-  let characterSelectValue = ''
   let charactersSelection = []
+  let showCharacterPicker = true
+  $: {
+    // Fix for admin state reset
+    if ($gameStatusStore === GAME_STATUSES.STARTED) {
+      showCharacterPicker = true
+    }
+  }
 
   onMount(async () => {
     console.log('opening connection')
     await openConnection()
     console.log('opened connection')
-    console.log('fetching characters')
-    $characterListStore = (await fetchCharacters()).characters;
-    console.log($characterListStore)
   });
 
+  $: {
+    charactersSelection = charactersSelection.filter(c => $characterListStore.includes(c))
+  }
+
   const selectCharacterHandler = () => {
-    charactersSelection = [...charactersSelection, characterSelectValue]
-    selectCharacter(characterSelectValue)
+    showCharacterPicker = false
+    selectCharacter(charactersSelection)
+    charactersSelection = []
   }
 
 </script>
 
 <style>
+  .content {
+    padding: 20px;
+    text-align: center;
+    background: var(--primary);
+  }
+
+  .current-line {
+    background-color: var(--secondary);
+    border-radius: 1rem;
+  }
+
+  .next-line-alert {
+    padding-top: 2rem;
+  }
 
 </style>
 
-<svelte:head>
-  <title>
-    HAPPY CRINGEMAS MOTHER FUCKERS
-  </title>
-</svelte:head>
-
+<div class="content {!!$lineComingUpStore ? 'line-coming-up' : ''}">
 {#if $gameStatusStore === GAME_STATUSES.UNSTARTED}
-  <h1>Pick a character!</h1>
-  <h3>or characters</h3>
+  <div class="character-select">
+    {#if showCharacterPicker}
+      <h1>Pick a characters!</h1>
 
-  {#if charactersSelection.length}
-    <h3>Chosen character(s): {charactersSelection.join(', ')}</h3>
+      <ItemSelect items={$characterListStore} bind:value={charactersSelection} />
+
+      {#if charactersSelection.length}
+        <button on:click={selectCharacterHandler}>Select Character{charactersSelection.length > 1 ? 's' : ''}</button>
+      {/if}
+    {:else}
+      <h1>WAIT FOR THE PLAY TO START</h1>
+    {/if}
+  </div>
+{:else if $gameStatusStore === GAME_STATUSES.STARTED}
+  <div class="play">
+  {#if $clientLineStore}
+    <h3><u>Character:</u></h3>
+    <h2>{$clientLineStore.character}</h2>
+    <h3><u>Direction:</u></h3>
+    <h2>{$clientLineStore.direction}</h2>
+    <h3><u>Line:</u></h3>
+    <h1 class="current-line">{$clientLineStore.line}</h1>
+    <button on:click={finishLine}>Finished Line</button>
   {/if}
 
-  <select bind:value={characterSelectValue}>
-  {#each $characterListStore as c }
-    <option value={c}>{c}</option>
-  {/each}
-  </select>
-  <button on:click={selectCharacterHandler}>Select Character</button>
-{:else if $gameStatusStore === GAME_STATUSES.STARTED}
-  {#if $clientLineStore }
-    <h3>Character:</h3>
-    <h2>{$clientLineStore.character}</h2>
-    <h3>Direction:</h3>
-    <h2>{$clientLineStore.direction}</h2>
-    <h3>Line:</h3>
-    <h1>{$clientLineStore.line}</h1>
-    <button on:click={finishLine}>Finished Line</button>
-  {:else if $lineComingUpStore}
-    <h1>{$lineComingUpStore}'S LINE IS NEXT!</h1>
-  {:else}
+  {#if $lineComingUpStore}
+    <h1 class="next-line-alert underline">{$lineComingUpStore}'S LINE IS NEXT!</h1>
+  {/if}
+
+  {#if !$lineComingUpStore && !$clientLineStore}
     <h1>WAIT, IT'S NOT YOUR TURN</h1>
   {/if}
+  </div>
 {:else if $gameStatusStore === GAME_STATUSES.FINISHED}
-  <h1>THE END</h1>
-  <h1>TAKE A BOW</h1>
+  <div class="the-end">
+    <h1>THE END</h1>
+    <h1>TAKE A BOW</h1>
+  </div>
 {/if}
+</div>

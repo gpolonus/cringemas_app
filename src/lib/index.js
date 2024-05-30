@@ -8,14 +8,13 @@ export const characterListStore = writable();
 export const GAME_STATUSES = {
   UNSTARTED: 0,
   STARTED: 1,
-  FINISHED: 2
+  FINISHED: 2,
 }
 export const gameStatusStore = writable(GAME_STATUSES.UNSTARTED)
 
-export const fetchCharacters = ds.fetchCharacters
-
 export const handleMessage = (type, data) => {
   switch(type) {
+    // Runtime events
     case 'starting':
       gameStatusStore.set(GAME_STATUSES.STARTED)
       break;
@@ -33,7 +32,15 @@ export const handleMessage = (type, data) => {
       gameStatusStore.set(GAME_STATUSES.FINISHED)
       break;
 
-      // TODO: add some sort of finishing state
+    // Admin resetting events
+      break;
+    case 'reset':
+      gameStatusStore.set(GAME_STATUSES.UNSTARTED)
+      characterListStore.set(data)
+      lineComingUpStore.set()
+      clientLineStore.set('')
+      break;
+
   }
 }
 
@@ -53,5 +60,36 @@ export const finishLine = () => {
   return ds.finishLine()
 }
 
-// TODO: would be nice to pass the character into the ds automagically instead of in the presentation layer
+// **********
+// * Modal Messages
+// **********
 
+export const alertMessage = writable();
+
+export const openModal = (type, message) => {
+  alertMessage.set({ type, message })
+}
+
+export const clearModal = () => {
+  alertMessage.set()
+}
+
+// **********
+// * Admin Endpoints
+// **********
+
+export const fetchScript = (pw) => {
+  return fetch(`${ds.url}/admin/script?pw=${pw}`)
+    .then(res => res.json())
+    .catch(() => {
+      openModal('error', "Failed to get script")
+    })
+}
+
+export const adminResetState = (pw) => {
+  return fetch(`${ds.url}/admin/reset?pw=${pw}`)
+}
+
+export const adminResetCurrentLine = (pw, line) => {
+  return fetch(`${ds.url}/admin/resetLine?pw=${pw}&line=${line}`)
+}

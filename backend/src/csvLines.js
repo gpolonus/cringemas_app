@@ -14,7 +14,7 @@ export const getData = (path, fn, delimiter = ',') => {
 
 export const jsonOut = (d) => console.log(JSON.stringify(d, null, 2))
 
-export const getLines = (csvLinesPath) => {
+export const getLinesFromFile = (csvLinesPath) => {
   const lines = []
   return getData(csvLinesPath, (data) => {
     // TODO: Convert the column names here
@@ -25,4 +25,9 @@ export const getLines = (csvLinesPath) => {
       line: line
     })
   }).then(() => lines)
+}
+
+// TODO: Get this working
+export const getLinesFromBuffer = () => {
+
 }
