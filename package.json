@@ -6,7 +6,9 @@
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
-		"backend": "cd ./backend/src && node ./server.js"
+		"backend": "cd ./backend/src && node ./server.js",
+    "backend-deploy": "cd ./backend/src && PORT=3001 node ./server.js",
+    "frontend-deploy": "PORT=3002 node build"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.0.0",

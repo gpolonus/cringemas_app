@@ -1,0 +1,14 @@
+{
+  "apps": [
+    {
+      "name": "backend",
+      "script": "npm",
+      "args": "run backend-deploy"
+    },
+    {
+      "name": "frontend",
+      "script": "npm",
+      "args": "run frontend-deploy"
+    }
+  ]
+}
