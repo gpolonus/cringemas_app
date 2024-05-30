@@ -2,8 +2,8 @@
 let clientId;
 
 export const url = process.env.NODE_ENV === 'development'
-  ? 'http://localhost:3000'
-  : '';
+  ? 'http://localhost:3000/api'
+  : 'api';
 
 export const fetchCharacters = () => {
   return fetch(`${url}/characters`).then(res => res.json())

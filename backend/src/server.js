@@ -12,14 +12,16 @@ const upload = multer()
 // import { getLines } from './csvLines.js';
 
 const app = express();
+const appRouter = express.Router()
 
 // if (process.env === 'development') {
   app.use(cors());
 // }
+app.use('/api', appRouter)
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 const GAME_STATUSES = {
   UNSTARTED: 0,
@@ -125,7 +127,7 @@ function sendLine() {
 //* ENDPOINTS
 //*******
 
-function linesHandler(req, res, next) {
+appRouter.get('/lines', function (req, res) {
   const headers = {
     'Content-Type': 'text/event-stream',
     'Connection': 'keep-alive',
@@ -163,11 +165,9 @@ function linesHandler(req, res, next) {
       remainingCharacters.push(...client.characters)
     }
   });
-}
+});
 
-app.get('/lines', linesHandler);
-
-// app.get('/characters', (req, res) => {
+// appRouter.get('/characters', (req, res) => {
 //   console.log('started /characters')
 //   const chosenCharacters = clients.map(cl => cl.character)
 //   const remainingCharacters = characters.filter(c => !chosenCharacters.includes(c))
@@ -176,7 +176,7 @@ app.get('/lines', linesHandler);
 // })
 
 // TODO: add an id checker middleware and error handling around that
-app.get('/selectCharacter', (req, res) => {
+appRouter.get('/selectCharacter', (req, res) => {
   const clientId = req.query.id
   const characters = req.query.character.split(',')
 
@@ -213,7 +213,7 @@ app.get('/selectCharacter', (req, res) => {
 
 // TODO: This should check that the client is the same character as the current line or something like that
 // Right now this finishes the line regardless of who made the request
-app.get('/finishedLine', (req, res) => {
+appRouter.get('/finishedLine', (req, res) => {
   currentLine++;
   const nextLine = lines[currentLine]
   if (!nextLine) {
@@ -231,9 +231,9 @@ app.get('/finishedLine', (req, res) => {
 //* ADMIN ENDPOINTS
 //*******
 
-const router = express.Router()
+const adminRouter = express.Router()
 const adminPassword = 'admin'
-router.use((req, res, next) => {
+adminRouter.use((req, res, next) => {
   const pw = req.query.pw
   if (pw === adminPassword) {
     next()
@@ -242,13 +242,13 @@ router.use((req, res, next) => {
   res.status(401).send()
 })
 
-router.get('/reset', (req, res) => {
+adminRouter.get('/reset', (req, res) => {
   resetState()
   res.send()
   sendMessageToAll('reset', remainingCharacters)
 })
 
-router.get('/resetLine', (req, res) => {
+adminRouter.get('/resetLine', (req, res) => {
   const line = req.query.line
   if (0 <= line && line < lines.length) {
     currentLine = line
@@ -260,17 +260,17 @@ router.get('/resetLine', (req, res) => {
   res.status(400).send(`Bad request: line (${line}) is out of bounds`)
 })
 
-router.get('/script', (req, res) => {
+adminRouter.get('/script', (req, res) => {
   console.log('requesting the script')
   res.json(lines)
 })
 
-// router.post('/upload-script', upload.none(), (req, res) => {
+// adminRouter.post('/upload-script', upload.none(), (req, res) => {
 //   console.log(req.body)
 //   res.send()
 // })
 
-app.use('/admin', router)
+appRouter.use('/admin', adminRouter)
 
 //*******
 //* APP INITIALIZATION

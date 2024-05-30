@@ -5,7 +5,6 @@
     clearModal,
     adminResetState,
     adminResetCurrentLine,
-    serverUrl
   } from '$lib'
     import ItemSelect from '../lib/item-select.svelte';
 
