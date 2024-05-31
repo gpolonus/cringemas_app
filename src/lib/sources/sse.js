@@ -33,6 +33,7 @@ export const connect = (handleMessage) => {
   // SSE error or termination
   source.addEventListener("error", (e) => {
     alert('SSE ERROR')
+    // TODO: add disconnection modal
     if (e.eventPhase === EventSource.CLOSED) {
       console.log("disconnected");
     } else {
