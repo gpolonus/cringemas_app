@@ -27,6 +27,8 @@
 - [x] pm2 releasing the ports on BE close
 - [o] line 110 error
   - this is patched for now, but needs proper reconnecting functionality on the FE
+  - much larger issue around phones going to sleep and properly reconnecting
+  - has to do with resending the characters and ensuring the client IDs are synced between BE and FE methinks
 - [] disable line setting when the game hasn't started
 
 ## Tests to Perform
