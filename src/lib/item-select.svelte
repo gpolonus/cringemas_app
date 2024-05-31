@@ -32,7 +32,6 @@ function selectItem(e, item) {
 
   .item {
     display: inline-block;
-    cursor: pointer;
   }
 
   input[type='checkbox'] {
@@ -45,6 +44,7 @@ function selectItem(e, item) {
     margin: 0.5rem;
     border: 2px solid var(--text-color);
     box-shadow: 4px 4px 0 0px var(--text-color);
+    cursor: pointer;
   }
 
   input:checked + label {
