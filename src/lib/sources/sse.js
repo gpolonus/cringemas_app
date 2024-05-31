@@ -49,7 +49,7 @@ export const connect = (handleMessage) => {
           selectCharacter(chosenCharacters)
           clearModal()
         })
-        location.reload()
+        // location.reload()
       }
     )
     if (e.eventPhase === EventSource.CLOSED) {
