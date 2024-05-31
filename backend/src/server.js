@@ -173,6 +173,7 @@ appRouter.get('/lines', function (req, res) {
   console.log('Open connections:', clients.map(({ name }) => name))
 
   const intervalId = setInterval(() => {
+    // So far as I can tell, this doesn't work
     client.send('ping')
   }, 3000)
 
