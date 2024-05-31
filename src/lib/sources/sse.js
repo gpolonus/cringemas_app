@@ -1,4 +1,4 @@
-import { openModal } from "..";
+import { clearModal, openModal } from "..";
 
 let clientId;
 // Only holding here for reconnection purposes
@@ -51,6 +51,7 @@ export const connect = (handleMessage) => {
         setTimeout(async () => {
           await connect(handleMessage)
           selectCharacter(chosenCharacters)
+          clearModal()
         })
       }
     )
@@ -71,7 +72,12 @@ export const connect = (handleMessage) => {
 
 export const selectCharacter = (chars) => {
   chosenCharacters = chars
-  return fetch(`${url}/selectCharacter?id=${clientId}&character=${chars.join(',')}`)
+  return fetch(`${url}/selectCharacter?id=${clientId}&character=${chars.join(',')}`).then(res => {
+    if (res.status !== 200) {
+      openModal('error', 'Character not available')
+    }
+    return res
+  })
 }
 
 export const finishLine = () => {

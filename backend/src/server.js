@@ -172,6 +172,10 @@ appRouter.get('/lines', function (req, res) {
   console.log('Connection opened:', clientId, client.name)
   console.log('Open connections:', clients.map(({ name }) => name))
 
+  const intervalId = setInterval(() => {
+    client.send('ping')
+  }, 3000)
+
   req.on('close', () => {
     console.log(`${client.name}: ${clientId} Connection closed`);
     clients = clients.filter(client => client.id !== clientId);
@@ -179,6 +183,8 @@ appRouter.get('/lines', function (req, res) {
     if (client.characters.length) {
       remainingCharacters.push(...client.characters)
     }
+
+    clearInterval(intervalId)
   });
 });
 
