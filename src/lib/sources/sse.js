@@ -23,7 +23,7 @@ export const connect = (handleMessage) => {
   source.addEventListener("open", (e) => {
     console.log("connected", e);
 
-    if (disconnected) {
+    if (disconnected && chosenCharacters) {
       disconnected = false
 
       openModal('message', "You've been reconnected! Just hit Resume to continue:",

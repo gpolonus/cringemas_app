@@ -22,16 +22,19 @@
 - [x] back button on the existing line person
 - [x] color picker
 - [x] close dialogs on admin action completion
-- [] pop error modals on endpoint/sse errors
+- [o] pop error modals on ALL endpoint/sse errors
+  - already have this for many of them, but would like to put error handling in a HOC and have the error messages come from the BE
 - [x] pm2 running BE
 - [x] pm2 releasing the ports on BE close
-- [o] line 110 error
+- [x] line 110 error
   - this is patched for now, but needs proper reconnecting functionality on the FE
   - much larger issue around phones going to sleep and properly reconnecting
   - has to do with resending the characters and ensuring the client IDs are synced between BE and FE methinks
   - is there an open event I can listen to? Hopefully!
     - I think there is a weird race condition happening here with the connection opening taking a sec after the phone is woken up
+    - this was absolutely right, and listening to the open event and resending the chosen characters on open if disconnected fixed it
 - [] disable line setting when the game hasn't started
+  - this already doesn't do anything when the game isn't running
 
 ## Tests to Perform
 - [x] multiple characters for one client
@@ -54,7 +57,8 @@
 
 ## Future todos
 - [] color coding of stage direction vs line
-- [] prompt user when the next line is there's
+- [] colors for different characters
+- [x] prompt user when the next line is there's
 - [] list word count for each character in the signup screen
 - [] don't continue the play if not all characters are present
   - disable the button if not all characters are there

@@ -8,8 +8,8 @@ import bodyParser from 'body-parser'
 import cors from 'cors'
 import { generate } from 'random-words';
 import multer from 'multer'
+import { getLinesFromFile } from './csvLines.js';
 const upload = multer()
-// import { getLines } from './csvLines.js';
 
 const app = express();
 const appRouter = express.Router()
@@ -38,18 +38,18 @@ const GAME_STATUSES = {
 
 let clients = [], lines = [], characters, remainingCharacters, gameStatus, currentLine;
 
-function resetState() {
-  lines = [
-    {"character": "Bob", "line": "Hey Alice, how are you doing today?"},
-    {"character": "Alice", "line": "I'm doing well, thanks for asking."},
-    {"character": "Eve", "line": "Hi guys, what's up?"},
-    {"character": "Bob", "line": "Not much, just catching up with Alice."},
-    {"character": "Alice", "line": "Yeah, we were just chatting."},
-    {"character": "Eve", "line": "Mind if I join?"},
-    {"character": "Bob", "line": "Of course not, the more the merrier."},
-    {"character": "Alice", "line": "Yeah, it'll be fun to have you here."},
-    {"character": "Eve", "line": "Great! So, what were you two talking about?"}
-  ];
+async function resetState() {
+  // lines = [
+  //   {"character": "Bob", "line": "Hey Alice, how are you doing today?"},
+  //   {"character": "Alice", "line": "I'm doing well, thanks for asking."},
+  //   {"character": "Eve", "line": "Hi guys, what's up?"},
+  //   {"character": "Bob", "line": "Not much, just catching up with Alice."},
+  //   {"character": "Alice", "line": "Yeah, we were just chatting."},
+  //   {"character": "Eve", "line": "Mind if I join?"},
+  //   {"character": "Bob", "line": "Of course not, the more the merrier."},
+  //   {"character": "Alice", "line": "Yeah, it'll be fun to have you here."},
+  //   {"character": "Eve", "line": "Great! So, what were you two talking about?"}
+  // ];
   // lines = [
   //   {"character": "Bob", "line": "Hey Alice, how are you doing today?", "direction": "smiling and waving"},
   //   {"character": "Alice", "line": "I'm doing well, thanks for asking.", "direction": "cheerfully"},
@@ -78,6 +78,8 @@ function resetState() {
   //   {"character": "Alice", "line": "It's settled then! See you all at 10 AM.", "direction": "happily"},
   //   {"character": "Bob", "line": "Looking forward to it!", "direction": "smiling"}
   // ]
+  lines = await getLinesFromFile('./CringemasPlay_2024.csv')
+  console.log(`Finished reading in script, number of lines: ${lines.length}`)
   characters = Object.keys(lines.reduce((ac, { character: c }) => ({ ...ac, [c]: true }), {}))
   remainingCharacters = [...characters]
   gameStatus = GAME_STATUSES.UNSTARTED;
@@ -90,7 +92,7 @@ function resetState() {
 }
 
 // Initially set the state
-resetState()
+await resetState()
 
 
 //*******
