@@ -29,6 +29,8 @@
   - this is patched for now, but needs proper reconnecting functionality on the FE
   - much larger issue around phones going to sleep and properly reconnecting
   - has to do with resending the characters and ensuring the client IDs are synced between BE and FE methinks
+  - is there an open event I can listen to? Hopefully!
+    - I think there is a weird race condition happening here with the connection opening taking a sec after the phone is woken up
 - [] disable line setting when the game hasn't started
 
 ## Tests to Perform

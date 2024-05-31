@@ -3,6 +3,7 @@ import { clearModal, openModal } from "..";
 let clientId;
 // Only holding here for reconnection purposes
 let chosenCharacters;
+let disconnected = false;
 
 export const url = process.env.NODE_ENV === 'development'
   ? 'http://localhost:3000/api'
@@ -21,6 +22,22 @@ export const connect = (handleMessage) => {
 
   source.addEventListener("open", (e) => {
     console.log("connected", e);
+
+    if (disconnected) {
+      disconnected = false
+
+      openModal('message', "You've been reconnected! Just hit Resume to continue:",
+        'Resume',
+        () => {
+          setTimeout(async () => {
+            selectCharacter(chosenCharacters)
+            clearModal()
+          })
+        },
+        // Don't show the close button
+        false
+      )
+    }
   });
 
   source.addEventListener("message", (e) => {
@@ -35,22 +52,21 @@ export const connect = (handleMessage) => {
 
   // SSE error or termination
   source.addEventListener("error", (e) => {
+    disconnected = true;
+
     openModal(
       'error',
       // 'You have been disconnected from the server, hit the Reconnect button or refresh the page and reselect your character(s) to get back in.',
       // 'Reconnect',
-      'You have been disconnected from the server, refresh the page and reselect your character(s) to get back in.',
+      'You have been disconnected from the server, please wait to be reconnected or refresh the page and reselect your character(s) to get back in.',
       'Reload',
       () => {
         // Calling `connect` here will open a whole nother connection when the
         // original one is trying to stay alive, thus creating more than one
         // connection per tab.
-        // TODO: All that's needed is to resend what character this client is.
-        // setTimeout(async () => {
-        //   selectCharacter(chosenCharacters)
-        //   clearModal()
-        // })
-        location.reload()
+        // TODO: All that's needed is to resend what character this client is, once the client is connected again.
+        location.reload();
+        clearModal();
       }
     )
     if (e.eventPhase === EventSource.CLOSED) {

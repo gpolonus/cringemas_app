@@ -70,8 +70,8 @@ export const backtrackLine = () => {
 
 export const alertMessage = writable();
 
-export const openModal = (type, message, actionName, action) => {
-  alertMessage.set({ type, message, actionName, action })
+export const openModal = (type, message, actionName, action, showCloseButton = true) => {
+  alertMessage.set({ type, message, actionName, action, showCloseButton })
 }
 
 export const clearModal = () => {
