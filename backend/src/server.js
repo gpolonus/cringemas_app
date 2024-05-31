@@ -173,7 +173,7 @@ appRouter.get('/lines', function (req, res) {
   console.log('Open connections:', clients.map(({ name }) => name))
 
   req.on('close', () => {
-    console.log(`${client.name}: ${clientId} Connection closed`);
+    console.log(`${client.name}: ${clientId} Connection closed. Characters: ${client.characters.join(', ')}`);
     clients = clients.filter(client => client.id !== clientId);
 
     if (client.characters.length) {
