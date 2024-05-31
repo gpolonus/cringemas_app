@@ -38,18 +38,19 @@ export const connect = (handleMessage) => {
     openModal(
       'error',
       // 'You have been disconnected from the server, hit the Reconnect button or refresh the page and reselect your character(s) to get back in.',
-      'You have been disconnected from the server, hit refresh the page and reselect your character(s) to get back in.',
-      'Refresh',
+      // 'Reconnect',
+      'You have been disconnected from the server, refresh the page and reselect your character(s) to get back in.',
+      'Reload',
       () => {
         // Calling `connect` here will open a whole nother connection when the
         // original one is trying to stay alive, thus creating more than one
         // connection per tab.
-        setTimeout(async () => {
-          // await connect(handleMessage)
-          selectCharacter(chosenCharacters)
-          clearModal()
-        })
-        // location.reload()
+        // TODO: All that's needed is to resend what character this client is.
+        // setTimeout(async () => {
+        //   selectCharacter(chosenCharacters)
+        //   clearModal()
+        // })
+        location.reload()
       }
     )
     if (e.eventPhase === EventSource.CLOSED) {
