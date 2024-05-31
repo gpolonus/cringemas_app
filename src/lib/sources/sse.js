@@ -17,16 +17,10 @@ export const openConnection = (handleMessage) => {
 }
 
 export const connect = (handleMessage) => {
-  let resolve;
-  const promise = new Promise(r => {
-    resolve = r
-  })
-
   const source = new EventSource(`${url}/lines`);
 
   source.addEventListener("open", (e) => {
     console.log("connected", e);
-    resolve()
   });
 
   source.addEventListener("message", (e) => {
@@ -50,11 +44,11 @@ export const connect = (handleMessage) => {
         // Calling `connect` here will open a whole nother connection when the
         // original one is trying to stay alive, thus creating more than one
         // connection per tab.
-        // setTimeout(async () => {
-        //   await connect(handleMessage)
-        //   selectCharacter(chosenCharacters)
-        //   clearModal()
-        // })
+        setTimeout(async () => {
+          // await connect(handleMessage)
+          selectCharacter(chosenCharacters)
+          clearModal()
+        })
         location.reload()
       }
     )
@@ -69,8 +63,6 @@ export const connect = (handleMessage) => {
     console.log('closing bc of unload')
     source.close()
   }
-
-  return promise
 }
 
 export const selectCharacter = (chars) => {
