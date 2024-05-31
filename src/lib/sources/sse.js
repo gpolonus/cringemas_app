@@ -43,16 +43,19 @@ export const connect = (handleMessage) => {
   source.addEventListener("error", (e) => {
     openModal(
       'error',
-      'You have been disconnected from the server, hit the Reconnect button or refresh the page and reselect your character(s) to get back in.',
-      'Reconnect',
+      // 'You have been disconnected from the server, hit the Reconnect button or refresh the page and reselect your character(s) to get back in.',
+      'You have been disconnected from the server, hit refresh the page and reselect your character(s) to get back in.',
+      'Refresh',
       () => {
-        // Adding the setTimeout so that the closure isn't recursive
-        // If it was, it probably wouldn't be bad, but it feels icky
-        setTimeout(async () => {
-          await connect(handleMessage)
-          selectCharacter(chosenCharacters)
-          clearModal()
-        })
+        // Calling `connect` here will open a whole nother connection when the
+        // original one is trying to stay alive, thus creating more than one
+        // connection per tab.
+        // setTimeout(async () => {
+        //   await connect(handleMessage)
+        //   selectCharacter(chosenCharacters)
+        //   clearModal()
+        // })
+        location.reload()
       }
     )
     if (e.eventPhase === EventSource.CLOSED) {
