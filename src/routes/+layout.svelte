@@ -28,6 +28,7 @@
     return prompt("What's the admin password?")
   }
 
+  // TODO: openModal should only get called from the data layer
   const resetState = () => {
     const password = requestPassword()
     adminResetState(password)
@@ -134,6 +135,16 @@
     uploadFormEl.submit()
   }
 
+  const headerLinksList = [
+    'https://www.youtube.com/watch?v=3FqZivGF6LA',
+    'https://www.youtube.com/watch?v=-B98eOF6N-4',
+    'https://www.youtube.com/watch?v=_bxYjPjQvKA',
+    'https://www.youtube.com/watch?v=EvRy8ZJffMs',
+    'https://www.youtube.com/watch?v=SGWOi2Eswv0',
+    'https://www.youtube.com/watch?v=a3qcNyjj9ZQ'
+  ]
+  const headerLink = headerLinksList[Math.round(Math.random() * (headerLinksList.length - 1))]
+
 </script>
 
 <style>
@@ -165,6 +176,11 @@
     font-family: "Vast Shadow", serif;
   }
 
+  .header a {
+    color: var(--text-color);
+    text-decoration: none;
+  }
+
   :global(h1, h2, h3) {
     margin: 0;
     padding-bottom: 1rem;
@@ -190,7 +206,7 @@
   :global(button) {
     position: relative;
     padding: 1rem;
-    margin-top: 1rem;
+    margin: 1rem 0.5rem 0;
     border: 2px solid black;
     font-size: 1.5rem;
     cursor: pointer;
@@ -250,19 +266,10 @@
   }
 </style>
 
-<svelte:head>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Vast+Shadow&display=swap" rel="stylesheet">
-  <title>
-    HAPPY CRINGEMAS MOTHER FUCKERS
-  </title>
-</svelte:head>
-
 <div class="body" style={colorStyles}>
   <div class="header">
     <h2>
-      MERRY CRINGEMAS
+      <a target="_blank" href={headerLink}>MERRY CRINGEMAS</a>
     </h2>
   </div>
 

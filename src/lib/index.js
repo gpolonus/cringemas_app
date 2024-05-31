@@ -21,12 +21,9 @@ export const handleMessage = (type, data) => {
     case 'characters':
       characterListStore.set(data)
       break;
-    case 'lineComingUp':
-      lineComingUpStore.set(data)
-      break;
     case 'line':
-      lineComingUpStore.set(0)
-      clientLineStore.set(data)
+      lineComingUpStore.set(data?.nextNextCharacter)
+      clientLineStore.set(data?.line)
       break;
     case 'finished':
       gameStatusStore.set(GAME_STATUSES.FINISHED)
@@ -50,14 +47,22 @@ export const openConnection = () => {
 
 export const selectCharacter = (character) => {
   return ds.selectCharacter(character).catch(e => {
-    // TODO: something here, probably related to an error store and modal
-    // TODO: abstract error handling into an HOC
+    openModal('error', e)
   })
 }
 
 export const finishLine = () => {
   clientLineStore.set('')
   return ds.finishLine()
+}
+
+export const backtrackLine = () => {
+  return ds.backtrackLine()
+    .then((res) => {
+      if (res.status !== 200) {
+        openModal('error', "You are at the beginning, you can't go backwards")
+      }
+    })
 }
 
 // **********

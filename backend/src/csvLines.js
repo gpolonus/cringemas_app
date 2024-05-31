@@ -17,7 +17,7 @@ export const jsonOut = (d) => console.log(JSON.stringify(d, null, 2))
 export const getLinesFromFile = (csvLinesPath) => {
   const lines = []
   return getData(csvLinesPath, (data) => {
-    // TODO: Convert the column names here
+    // TODO: Convert the column names here -- Pat is going to use these columns, so no worries
     const { character, direction, line } = data;
     lines.push({
       character: character.trim(),
@@ -27,7 +27,7 @@ export const getLinesFromFile = (csvLinesPath) => {
   }).then(() => lines)
 }
 
-// TODO: Get this working
+// TODO: Get this working for the uploading functionality
 export const getLinesFromBuffer = () => {
 
 }

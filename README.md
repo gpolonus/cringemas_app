@@ -19,11 +19,15 @@
 
 
 # TODOs
-- [] color picker
-- [] close dialogs on admin action completion
+- [x] back button on the existing line person
+- [x] color picker
+- [x] close dialogs on admin action completion
 - [] pop error modals on endpoint/sse errors
-- [o] pm2 running BE
-- [] pm2 releasing the ports on BE close
+- [x] pm2 running BE
+- [x] pm2 releasing the ports on BE close
+- [o] line 110 error
+  - this is patched for now, but needs proper reconnecting functionality on the FE
+- [] disable line setting when the game hasn't started
 
 ## Tests to Perform
 - [x] multiple characters for one client
@@ -41,7 +45,7 @@
   - client with bob and alice leaves
     - [x] when it's alice's line
     - [x] when it's bob's line
-- [] stress testing number of connections on server
+- [x] stress testing number of connections on server
 
 
 ## Future todos

@@ -27,9 +27,11 @@ function selectItem(e, item) {
 
 <style>
   .item-select {
-    display: flex;
-    flex-direction: column;
     text-align: center;
+  }
+
+  .item {
+    display: inline-block;
   }
 
   input[type='checkbox'] {

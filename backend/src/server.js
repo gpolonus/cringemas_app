@@ -39,45 +39,45 @@ const GAME_STATUSES = {
 let clients = [], lines = [], characters, remainingCharacters, gameStatus, currentLine;
 
 function resetState() {
-  // lines = [
-  //   {"character": "Bob", "line": "Hey Alice, how are you doing today?"},
-  //   {"character": "Alice", "line": "I'm doing well, thanks for asking."},
-  //   {"character": "Eve", "line": "Hi guys, what's up?"},
-  //   {"character": "Bob", "line": "Not much, just catching up with Alice."},
-  //   {"character": "Alice", "line": "Yeah, we were just chatting."},
-  //   {"character": "Eve", "line": "Mind if I join?"},
-  //   {"character": "Bob", "line": "Of course not, the more the merrier."},
-  //   {"character": "Alice", "line": "Yeah, it'll be fun to have you here."},
-  //   {"character": "Eve", "line": "Great! So, what were you two talking about?"}
-  // ];
   lines = [
-    {"character": "Bob", "line": "Hey Alice, how are you doing today?", "direction": "smiling and waving"},
-    {"character": "Alice", "line": "I'm doing well, thanks for asking.", "direction": "cheerfully"},
-    {"character": "Eve", "line": "Hi guys, what's up?", "direction": "curiously"},
-    {"character": "Bob", "line": "Not much, just catching up with Alice.", "direction": "casually"},
-    {"character": "Alice", "line": "Yeah, we were just chatting.", "direction": "nodding"},
-    {"character": "Charlie", "line": "Hey everyone! What are you talking about?", "direction": "excitedly"},
-    {"character": "Eve", "line": "Just about our plans for the weekend.", "direction": "enthusiastically"},
-    {"character": "Dave", "line": "Did someone mention the weekend? Count me in!", "direction": "eagerly"},
-    {"character": "Bob", "line": "Great! Any ideas on what we should do?", "direction": "inquisitively"},
-    {"character": "Alice", "line": "How about a hike? The weather's supposed to be nice.", "direction": "suggestively"},
-    {"character": "Eve", "line": "I love hiking! That's a great idea.", "direction": "happily"},
-    {"character": "Charlie", "line": "I'm in! We could also have a picnic afterward.", "direction": "enthusiastically"},
-    {"character": "Dave", "line": "A picnic sounds perfect.", "direction": "agreeably"},
-    {"character": "Faythe", "line": "Hi everyone! What are we planning?", "direction": "curiously, joining the group"},
-    {"character": "Alice", "line": "Hi Faythe! We're planning a hike and a picnic for the weekend.", "direction": "informatively"},
-    {"character": "Grace", "line": "That sounds like fun! Can I join too?", "direction": "eagerly"},
-    {"character": "Alice", "line": "That sounds like fun! Can I join too?", "direction": "eagerly"},
-    {"character": "Bob", "line": "Of course, Grace! The more, the merrier.", "direction": "welcomingly"},
-    {"character": "Eve", "line": "It's going to be a fantastic weekend.", "direction": "excitedly"},
-    {"character": "Charlie", "line": "Absolutely! Let's finalize the details.", "direction": "enthusiastically"},
-    {"character": "Dave", "line": "How about we meet at 10 AM at the trailhead?", "direction": "suggestively"},
-    {"character": "Faythe", "line": "10 AM works for me.", "direction": "agreeably"},
-    {"character": "Grace", "line": "Same here. Can't wait!", "direction": "excitedly"},
-    {"character": "Alice", "line": "Same here. Can't wait!", "direction": "excitedly"},
-    {"character": "Alice", "line": "It's settled then! See you all at 10 AM.", "direction": "happily"},
-    {"character": "Bob", "line": "Looking forward to it!", "direction": "smiling"}
-  ]
+    {"character": "Bob", "line": "Hey Alice, how are you doing today?"},
+    {"character": "Alice", "line": "I'm doing well, thanks for asking."},
+    {"character": "Eve", "line": "Hi guys, what's up?"},
+    {"character": "Bob", "line": "Not much, just catching up with Alice."},
+    {"character": "Alice", "line": "Yeah, we were just chatting."},
+    {"character": "Eve", "line": "Mind if I join?"},
+    {"character": "Bob", "line": "Of course not, the more the merrier."},
+    {"character": "Alice", "line": "Yeah, it'll be fun to have you here."},
+    {"character": "Eve", "line": "Great! So, what were you two talking about?"}
+  ];
+  // lines = [
+  //   {"character": "Bob", "line": "Hey Alice, how are you doing today?", "direction": "smiling and waving"},
+  //   {"character": "Alice", "line": "I'm doing well, thanks for asking.", "direction": "cheerfully"},
+  //   {"character": "Eve", "line": "Hi guys, what's up?", "direction": "curiously"},
+  //   {"character": "Bob", "line": "Not much, just catching up with Alice.", "direction": "casually"},
+  //   {"character": "Alice", "line": "Yeah, we were just chatting.", "direction": "nodding"},
+  //   {"character": "Charlie", "line": "Hey everyone! What are you talking about?", "direction": "excitedly"},
+  //   {"character": "Eve", "line": "Just about our plans for the weekend.", "direction": "enthusiastically"},
+  //   {"character": "Dave", "line": "Did someone mention the weekend? Count me in!", "direction": "eagerly"},
+  //   {"character": "Bob", "line": "Great! Any ideas on what we should do?", "direction": "inquisitively"},
+  //   {"character": "Alice", "line": "How about a hike? The weather's supposed to be nice.", "direction": "suggestively"},
+  //   {"character": "Eve", "line": "I love hiking! That's a great idea.", "direction": "happily"},
+  //   {"character": "Charlie", "line": "I'm in! We could also have a picnic afterward.", "direction": "enthusiastically"},
+  //   {"character": "Dave", "line": "A picnic sounds perfect.", "direction": "agreeably"},
+  //   {"character": "Faythe", "line": "Hi everyone! What are we planning?", "direction": "curiously, joining the group"},
+  //   {"character": "Alice", "line": "Hi Faythe! We're planning a hike and a picnic for the weekend.", "direction": "informatively"},
+  //   {"character": "Grace", "line": "That sounds like fun! Can I join too?", "direction": "eagerly"},
+  //   {"character": "Alice", "line": "That sounds like fun! Can I join too?", "direction": "eagerly"},
+  //   {"character": "Bob", "line": "Of course, Grace! The more, the merrier.", "direction": "welcomingly"},
+  //   {"character": "Eve", "line": "It's going to be a fantastic weekend.", "direction": "excitedly"},
+  //   {"character": "Charlie", "line": "Absolutely! Let's finalize the details.", "direction": "enthusiastically"},
+  //   {"character": "Dave", "line": "How about we meet at 10 AM at the trailhead?", "direction": "suggestively"},
+  //   {"character": "Faythe", "line": "10 AM works for me.", "direction": "agreeably"},
+  //   {"character": "Grace", "line": "Same here. Can't wait!", "direction": "excitedly"},
+  //   {"character": "Alice", "line": "Same here. Can't wait!", "direction": "excitedly"},
+  //   {"character": "Alice", "line": "It's settled then! See you all at 10 AM.", "direction": "happily"},
+  //   {"character": "Bob", "line": "Looking forward to it!", "direction": "smiling"}
+  // ]
   characters = Object.keys(lines.reduce((ac, { character: c }) => ({ ...ac, [c]: true }), {}))
   remainingCharacters = [...characters]
   gameStatus = GAME_STATUSES.UNSTARTED;
@@ -103,20 +103,35 @@ function sendMessageToAll(type, data, cs = clients) {
 
 function sendLine() {
   const nextLine = lines[currentLine]
+  const messageData = {}
   const upcomingClientIds = []
 
   const nextCharacter = nextLine.character
+  // TODO: reconnect (or something) if there is not a client here
   const nextClient = clients.find(({ characters: cs }) => cs.includes(nextCharacter))
-  nextClient.send('line', nextLine)
-  upcomingClientIds.push(nextClient.id)
-
-  if (lines[currentLine + 1]) {
-    const nextNextCharacter = lines[currentLine + 1].character
-    const nextNextClient = clients.find(({ characters: cs }) => cs.includes(nextNextCharacter))
-    nextNextClient.send('lineComingUp', nextNextCharacter)
-    upcomingClientIds.push(nextNextClient.id)
+  // If statement here is just to avoid null pointer bugs
+  if (nextClient) {
+    messageData.line = nextLine
+    upcomingClientIds.push(nextClient?.id)
   }
 
+  let nextNextCharacter, nextNextClient;
+  if (lines[currentLine + 1]) {
+    nextNextCharacter = lines[currentLine + 1].character
+    nextNextClient = clients.find(({ characters: cs }) => cs.includes(nextNextCharacter))
+    upcomingClientIds.push(nextNextClient?.id)
+  }
+
+  // Only send one even to each person per what the line is
+  if (nextClient?.id === nextNextClient?.id) {
+    messageData.nextNextCharacter = nextNextCharacter
+    nextClient?.send('line', messageData)
+  } else {
+    nextClient?.send('line', messageData)
+    nextNextClient?.send('line', { nextNextCharacter })
+  }
+
+  // This is somewhat unnecessary, but fixes so many bugs
   const everyoneElse = clients.filter(({ id }) => !upcomingClientIds.includes(id))
   sendMessageToAll('line', '', everyoneElse)
 }
@@ -209,6 +224,17 @@ appRouter.get('/selectCharacter', (req, res) => {
     sendMessageToAll('starting')
     sendLine()
   }
+})
+
+appRouter.get('/backtrackLine', (req, res) => {
+  if (currentLine === 0) {
+    res.status(400).send()
+    return
+  }
+
+  currentLine--
+  res.send()
+  sendLine()
 })
 
 // TODO: This should check that the client is the same character as the current line or something like that

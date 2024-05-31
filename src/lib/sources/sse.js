@@ -32,6 +32,7 @@ export const connect = (handleMessage) => {
 
   // SSE error or termination
   source.addEventListener("error", (e) => {
+    alert('SSE ERROR')
     if (e.eventPhase === EventSource.CLOSED) {
       console.log("disconnected");
     } else {
@@ -54,6 +55,10 @@ export const selectCharacter = (char) => {
 
 export const finishLine = () => {
   return fetch(`${url}/finishedLine`)
+}
+
+export const backtrackLine = () => {
+  return fetch(`${url}/backtrackLine`)
 }
 
 

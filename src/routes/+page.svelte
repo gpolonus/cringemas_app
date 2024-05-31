@@ -8,6 +8,7 @@
     gameStatusStore,
     GAME_STATUSES,
     finishLine,
+    backtrackLine,
     selectCharacter,
     lineComingUpStore
   } from '$lib'
@@ -82,7 +83,8 @@
     <h2>{$clientLineStore.direction}</h2>
     <h3><u>Line:</u></h3>
     <h1 class="current-line">{$clientLineStore.line}</h1>
-    <button on:click={finishLine}>Finished Line</button>
+    <button on:click={backtrackLine}>Go Back</button>
+    <button on:click={finishLine}>Finish Line</button>
   {/if}
 
   {#if $lineComingUpStore}
