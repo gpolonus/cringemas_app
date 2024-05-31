@@ -52,7 +52,6 @@ export const selectCharacter = (character) => {
 }
 
 export const finishLine = () => {
-  clientLineStore.set('')
   return ds.finishLine()
 }
 
@@ -71,8 +70,8 @@ export const backtrackLine = () => {
 
 export const alertMessage = writable();
 
-export const openModal = (type, message) => {
-  alertMessage.set({ type, message })
+export const openModal = (type, message, actionName, action) => {
+  alertMessage.set({ type, message, actionName, action })
 }
 
 export const clearModal = () => {

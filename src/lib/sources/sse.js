@@ -1,3 +1,4 @@
+import { openModal } from "..";
 
 let clientId;
 
@@ -32,8 +33,7 @@ export const connect = (handleMessage) => {
 
   // SSE error or termination
   source.addEventListener("error", (e) => {
-    alert('SSE ERROR')
-    // TODO: add disconnection modal
+    openModal('error', 'You have been disconnected from the server, refresh the page and reselect your character(s) to get back in.', 'Refresh', () => location.reload())
     if (e.eventPhase === EventSource.CLOSED) {
       console.log("disconnected");
     } else {

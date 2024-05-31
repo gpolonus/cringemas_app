@@ -23,6 +23,8 @@
 
   $: type = $alertMessage ? $alertMessage.type : ''
   $: message = $alertMessage ? $alertMessage.message : ''
+  $: actionName = $alertMessage ? $alertMessage.actionName : ''
+  $: action = $alertMessage ? $alertMessage.action : ''
 
   const requestPassword = () => {
     return prompt("What's the admin password?")
@@ -277,6 +279,11 @@
   <dialog bind:this={dialogEl} class={type}>
     <h1>{type}</h1>
     <div>{message}</div>
+    {#if actionName && action}
+    <div>
+      <button on:click={action}>{actionName}</button>
+    </div>
+    {/if}
     <div>
       <button on:click={clearModal}>Close</button>
     </div>
