@@ -211,6 +211,7 @@
     font-size: 1.5rem;
     cursor: pointer;
     box-shadow: 4px 4px 0 0px black;
+    color: black;
   }
 
   :global(button:active) {

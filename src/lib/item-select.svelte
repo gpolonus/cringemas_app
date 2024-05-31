@@ -32,6 +32,7 @@ function selectItem(e, item) {
 
   .item {
     display: inline-block;
+    cursor: pointer;
   }
 
   input[type='checkbox'] {
