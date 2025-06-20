@@ -78,7 +78,7 @@ async function resetState() {
   //   {"character": "Alice", "line": "It's settled then! See you all at 10 AM.", "direction": "happily"},
   //   {"character": "Bob", "line": "Looking forward to it!", "direction": "smiling"}
   // ]
-  lines = await getLinesFromFile('./CringemasPlay_2024.csv')
+  lines = await getLinesFromFile('./2025_CringemasPassionPlay.csv')
   console.log(`Finished reading in script, number of lines: ${lines.length}`)
   characters = Object.keys(lines.reduce((ac, { character: c }) => ({ ...ac, [c]: true }), {}))
   remainingCharacters = [...characters]
