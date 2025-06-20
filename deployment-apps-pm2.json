@@ -1,12 +1,12 @@
 {
   "apps": [
     {
-      "name": "backend",
+      "name": "cringemas-backend",
       "script": "npm",
       "args": "run backend-deploy"
     },
     {
-      "name": "frontend",
+      "name": "cringemas-frontend",
       "script": "npm",
       "args": "run frontend-deploy"
     }
